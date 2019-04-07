@@ -1,12 +1,12 @@
-// SignUp.js
+// Home.js
 
 import firebase from 'firebase';
 import app from '../config';
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 
 
-export default class Authentication extends React.Component {
+export default class Authentication extends Component {
   state = { email: '', password: '', errorMessage: null }
 
   handleSignUp = () => {
