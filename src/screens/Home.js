@@ -15,12 +15,15 @@ export default class Authentication extends React.Component {
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('Workout'))
       .catch(error => this.setState({ errorMessage: error.message }))
-  }
+  };
 
   handleLogin = () => {
-    //TODO: Write logic to login
-    console.log('login')
-  }
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('Workout'))
+      .catch(error => this.setState({ errorMessage: error.message }))
+    }
 
   render() {
     return (
