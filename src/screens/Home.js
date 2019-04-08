@@ -3,18 +3,20 @@
 import firebase from 'firebase';
 import app from '../config';
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
 
 
 export default class Authentication extends Component {
-  state = { email: '', password: '', errorMessage: null }
+  state = { email: '', password: '' }
 
   handleSignUp = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('Workout'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(error => { 
+        Alert.alert(error.message);
+    });
   };
 
   handleLogin = () => {
@@ -22,7 +24,9 @@ export default class Authentication extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('Workout'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .catch(error => {
+        Alert.alert(error.message);
+      });
     }
 
   render() {
