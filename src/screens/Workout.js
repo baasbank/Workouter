@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Button, Alert, TextInput } from 'react-native';
 import firebase from 'firebase';
 import { app, db } from '../config';
+import console from 'console';
 
 
 export default class Workout extends Component {
@@ -11,7 +12,7 @@ export default class Workout extends Component {
     set: '',
     weight: '',
     reps: 0,
-    rest: 0.0
+    rest: 0.0,
    };
 
   componentDidMount() {
@@ -26,14 +27,25 @@ export default class Workout extends Component {
   }
   handleAddSet = () => {
     const { exercise, set, weight, reps, rest } = this.state;
-    db.ref(this.state.userId).set({
+    dater = new Date().toLocaleDateString().replace(/\//g, '-');
+    dbref = this.state.userId + '/' + dater;
+    db.ref(dbref + '/' + set + '-' + (new Date())).set({
       exercise: exercise,
       set: set,
       weight: weight,
       reps: reps,
       rest: rest
     })
-    .then((docRef) => Alert.alert('Success!', 'Set saved!'))
+    .then((docRef) => {
+      Alert.alert('Success!', 'Session Saved!');
+      this.setState({
+        exercise: '',
+        set: '',
+        weight: '',
+        reps: 0,
+        rest: 0.0,
+      });
+      })
     .catch((error) => Alert.alert('Error', error.message));
     }
   render() {
